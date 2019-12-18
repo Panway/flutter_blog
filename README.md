@@ -1,6 +1,6 @@
 # flutter_blog
-
-A new Flutter project.
+我山寨的[苹果官网 demo](https://panway.github.io/flutter_blog)，右边是原生页面，可以看到用flutter同时适配PC和手机宽度都不是问题
+![flutterdemo.gif](https://upload-images.jianshu.io/upload_images/530140-5bdf95690f87552f.gif?imageMogr2/auto-orient/strip)
 
 ## Getting Started
 

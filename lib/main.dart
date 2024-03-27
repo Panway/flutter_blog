@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title = ''}) : super(key: key);
 
   final String title;
 
@@ -248,7 +248,11 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class Product {
-  const Product({this.imageURL, this.title, this.subTitle, this.desc});
+  const Product(
+      {this.imageURL = "",
+      this.title = '',
+      this.subTitle = '',
+      this.desc = ''});
   final String imageURL;
   final String title;
   final String subTitle;
@@ -258,13 +262,14 @@ class Product {
 typedef void CartChangedCallback(Product product, bool lightBackground);
 
 class ShoppingListItem extends StatelessWidget {
-  ShoppingListItem(
-      {Product product,
-      this.lightBackground,
-      this.fullWidth,
-      this.imagePadding,
-      this.onCartChanged})
-      : product = product,
+  ShoppingListItem({
+    required Product product,
+    this.lightBackground = true,
+    this.fullWidth = false,
+    this.imagePadding = const EdgeInsets.all(0.0),
+    CartChangedCallback? onCartChanged, // 将onCartChanged设置为可选的命名参数并声明为可空类型
+  })  : product = product,
+        onCartChanged = onCartChanged ?? _defaultCartChanged, // 设置默认值
         super(key: ObjectKey(product));
 
   final Product product;
@@ -272,7 +277,9 @@ class ShoppingListItem extends StatelessWidget {
   final bool fullWidth;
   final EdgeInsetsGeometry imagePadding;
   final CartChangedCallback onCartChanged;
-
+  static void _defaultCartChanged(Product product, bool lightBackground) {
+    // 设置默认的onCartChanged回调函数
+  }
   @override
   Widget build(BuildContext context) {
     print("======" + product.subTitle.length.toString());
@@ -333,7 +340,7 @@ class ShoppingListItem extends StatelessWidget {
                 ),
               ),
             ),
-            _ppText(null),
+            _ppText(""),
             _ppText(product.subTitle,
                 padding: const EdgeInsets.only(top: 5.0),
                 fontSize: 15.0,
@@ -375,10 +382,10 @@ class ShoppingListItem extends StatelessWidget {
   }
 
   Widget _ppText(String text,
-      {Color textColor,
-      Color backgroundColor,
-      double fontSize,
-      EdgeInsetsGeometry padding}) {
+      {Color textColor = Colors.black,
+      Color backgroundColor = Colors.transparent,
+      double fontSize = 16.0,
+      EdgeInsetsGeometry padding = const EdgeInsets.all(8.0)}) {
     if (text != null && text.length > 0) {
       return Padding(
         // color: Colors.green,

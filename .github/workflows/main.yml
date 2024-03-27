@@ -1,19 +1,20 @@
-name: Flutter Web
+# https://github.com/marketplace/actions/flutter-action
+name: Flutter Web # 工作流名称
 on:
   push:
     branches:
-      - master
+      - master # 当推送到master分支时触发
 jobs:
   build:
-    name: Build Web
+    name: Build Web # 这是作业名称
     env:
       my_secret: ${{secrets.commit_secret}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # 运行在最新版本的Ubuntu操作系统上
     steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
         with:
-          channel: 'dev'
+          channel: 'stable'
       - run: flutter config --enable-web
       - run: flutter pub get
       - run: flutter build web --release
